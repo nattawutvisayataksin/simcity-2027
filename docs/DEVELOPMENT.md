@@ -31,3 +31,16 @@ PixelLab MCP endpoint เป็น configuration data ไม่ใช่ applica
 ไฟล์ตัวอย่างอยู่ที่ `.vscode/mcp.json.example` โดยใช้ `${PIXELLAB_API_TOKEN}` และ `${PIXLER_API_TOKEN}` เป็น placeholder เท่านั้น ให้สร้างไฟล์ local ชื่อ `.vscode/mcp.json` เองในเครื่องและแทนค่าด้วย token ผ่าน secret management ของผู้ใช้ ไฟล์จริงถูก ignore โดย Git
 
 รองรับ server เพิ่มเติมชื่อ `pixler` ที่ `https://mcp.pixler.dev` สำหรับงาน graphic asset และ visual exploration โดยไม่ผูก token เข้ากับ application runtime
+
+## Pixel-art fallback
+
+โปรเจกต์มี fallback renderer ใน `src/main.ts` เพื่อให้เกมยังมี visual asset ใช้งานได้แม้ `PixelLab MCP` หรือ `Pixler MCP` ไม่พร้อมใช้งาน โดยยึดแนวทางจาก `light-vp/pixelart-mcp` ได้แก่:
+
+- ใช้ palette จำกัดและ hue-shifted shading
+- วาดอาคารด้วย block silhouette ขนาดเล็ก
+- ใช้ skyline, ถนน, หน้าต่าง และเงาเป็น layer
+- ใช้ nearest-neighbor / `image-rendering: pixelated`
+
+แหล่งอ้างอิง: `https://github.com/light-vp/pixelart-mcp`
+
+หากติดตั้ง server นี้ในเครื่อง ต้องใช้ `uv` และลงทะเบียนแบบ local เท่านั้น เช่น `uv --directory <path-to-pixelart-mcp> run -m pixelart_mcp` ห้ามนำ local MCP command หรือ secret ไปไว้ใน production runtime
