@@ -6,6 +6,13 @@
       "headers": {
         "Authorization": "Bearer ${PIXELLAB_API_TOKEN}"
       }
+    },
+    "pixler": {
+      "url": "https://mcp.pixler.dev",
+      "type": "http",
+      "headers": {
+        "Authorization": "Bearer ${PIXLER_API_TOKEN}"
+      }
     }
   }
 }

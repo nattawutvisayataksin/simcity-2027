@@ -54,9 +54,22 @@ class CityScene extends Phaser.Scene {
     this.board.clear(); this.labels.forEach(l => l.destroy()); this.labels = [];
     this.board.fillStyle(0x0b2632, 1); this.board.fillRect(0, 0, this.scale.width, this.scale.height);
     this.board.fillStyle(0x123b46, 1); this.board.fillCircle(this.scale.width / 2, BOARD_ORIGIN_Y + 150, 285);
+    this.drawCityBackdrop();
     for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) { const p = this.gridToWorld(x, y); const active = this.hover?.x === x && this.hover?.y === y; this.board.fillStyle(active ? 0x3a7890 : (x + y) % 2 ? 0x245064 : 0x1d4054, active ? 1 : 1); this.board.beginPath(); this.board.moveTo(p.x, p.y - TILE_H / 2); this.board.lineTo(p.x + TILE_W / 2, p.y); this.board.lineTo(p.x, p.y + TILE_H / 2); this.board.lineTo(p.x - TILE_W / 2, p.y); this.board.closePath(); this.board.fillPath(); this.board.lineStyle(active ? 3 : 2, active ? 0xffcf72 : 0x4f91a2, 0.95); this.board.strokePath(); }
     state.buildings.forEach(b => { const p = this.gridToWorld(b.x, b.y); this.board.fillStyle(0x07141b, 0.45); this.board.fillEllipse(p.x, p.y + 5, 50, 16); this.drawPixelBuilding(p.x, p.y, b.kind); });
     if (this.hover && this.hover.x >= 0 && this.hover.y >= 0 && this.hover.x < GRID && this.hover.y < GRID) { const p = this.gridToWorld(this.hover.x, this.hover.y); const t = this.add.text(p.x, p.y - 48, `${BUILDINGS[state.selected].label}  $${BUILDINGS[state.selected].cost}`, { fontFamily: 'monospace', fontSize: '11px', color: '#d7f4ff', backgroundColor: '#0b1727', padding: { x: 6, y: 4 } }).setOrigin(0.5); this.labels.push(t); }
+  }
+  drawCityBackdrop() {
+    const baseY = BOARD_ORIGIN_Y + 212;
+    this.board.fillStyle(0x0e3540, 1); this.board.fillRect(0, baseY, this.scale.width, 112);
+    this.board.fillStyle(0x2c6870, 0.8); this.board.fillRect(0, baseY + 42, this.scale.width, 3);
+    for (let x = -20; x < this.scale.width + 80; x += 92) {
+      const height = 22 + ((x * 7) % 46 + 46) % 46;
+      this.board.fillStyle(0x164957, 1); this.board.fillRect(x, baseY - height, 42, height);
+      this.board.fillStyle(0x58a6a1, 0.8); this.board.fillRect(x + 8, baseY - height + 10, 5, 5); this.board.fillRect(x + 24, baseY - height + 22, 5, 5);
+    }
+    this.board.fillStyle(0xffc857, 0.9); this.board.fillRect(28, baseY + 64, this.scale.width - 56, 4);
+    for (let x = 38; x < this.scale.width - 32; x += 54) { this.board.fillStyle(0x07141b, 1); this.board.fillRect(x, baseY + 60, 20, 12); this.board.fillStyle(0xffefab, 1); this.board.fillRect(x + 4, baseY + 63, 4, 3); this.board.fillRect(x + 12, baseY + 63, 4, 3); }
   }
   drawPixelBuilding(x: number, y: number, kind: Kind) {
     const color = COLORS[kind];

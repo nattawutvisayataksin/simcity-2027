@@ -28,4 +28,6 @@
 
 PixelLab MCP endpoint เป็น configuration data ไม่ใช่ application dependency ให้เก็บไว้เฉพาะใน local VS Code user/workspace settings ห้ามนำ bearer token มาใส่ใน repository, README, source files หรือ commits หาก token ถูกเปิดเผยแล้ว ควร rotate token ก่อนแชร์ repository
 
-ไฟล์ตัวอย่างอยู่ที่ `.vscode/mcp.json.example` โดยใช้ `${PIXELLAB_API_TOKEN}` เป็น placeholder เท่านั้น ให้สร้างไฟล์ local ชื่อ `.vscode/mcp.json` เองในเครื่องและแทนค่าด้วย token ผ่าน secret management ของผู้ใช้ ไฟล์จริงถูก ignore โดย Git
+ไฟล์ตัวอย่างอยู่ที่ `.vscode/mcp.json.example` โดยใช้ `${PIXELLAB_API_TOKEN}` และ `${PIXLER_API_TOKEN}` เป็น placeholder เท่านั้น ให้สร้างไฟล์ local ชื่อ `.vscode/mcp.json` เองในเครื่องและแทนค่าด้วย token ผ่าน secret management ของผู้ใช้ ไฟล์จริงถูก ignore โดย Git
+
+รองรับ server เพิ่มเติมชื่อ `pixler` ที่ `https://mcp.pixler.dev` สำหรับงาน graphic asset และ visual exploration โดยไม่ผูก token เข้ากับ application runtime
